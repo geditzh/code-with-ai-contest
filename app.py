@@ -2,11 +2,6 @@ import streamlit as st
 import pandas as pd
 import pydeck as pdk
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
-
-plt.rcParams['font.sans-serif'] = ['DejaVu Sans', 'Arial Unicode MS', 'Noto Sans CJK SC']
-plt.rcParams['axes.unicode_minus'] = False
 
 st.set_page_config(page_title="5G 信号可视化看板", layout="wide")
 
@@ -163,17 +158,33 @@ def create_band_chart(df):
     """
     创建频段分布柱状图
 
-    统计各频段的基站数量，使用matplotlib图表展示
+    统计各频段的基站数量
 
     Args:
         df (pd.DataFrame): 信号数据DataFrame
     """
-    st.subheader("📊 各频段基站数量统计")
+    st.markdown("**📊 各频段基站数量统计**")
 
     band_counts = df['Band'].value_counts().reset_index()
     band_counts.columns = ['频段', '数量']
 
-    st.bar_chart(band_counts.set_index('频段'))
+    st.bar_chart(
+        band_counts.set_index('频段'),
+        horizontal=False,
+        color=["#FF6B6B"]
+    )
+
+    col1, col2, col3 = st.columns(3)
+    for i, (_, row) in enumerate(band_counts.iterrows()):
+        if i == 0:
+            with col1:
+                st.metric(label=row['频段'], value=f"{int(row['数量'])} 个")
+        elif i == 1:
+            with col2:
+                st.metric(label=row['频段'], value=f"{int(row['数量'])} 个")
+        elif i == 2:
+            with col3:
+                st.metric(label=row['频段'], value=f"{int(row['数量'])} 个")
 
 
 def create_terminal_chart(df):
@@ -185,12 +196,28 @@ def create_terminal_chart(df):
     Args:
         df (pd.DataFrame): 信号数据DataFrame
     """
-    st.subheader("📱 终端类型分布")
+    st.markdown("**📱 终端类型分布**")
 
     terminal_counts = df['TerminalType'].value_counts().reset_index()
     terminal_counts.columns = ['终端类型', '数量']
 
-    st.bar_chart(terminal_counts.set_index('终端类型'))
+    st.bar_chart(
+        terminal_counts.set_index('终端类型'),
+        horizontal=False,
+        color=["#4ECDC4"]
+    )
+
+    col1, col2, col3 = st.columns(3)
+    for i, (_, row) in enumerate(terminal_counts.iterrows()):
+        if i == 0:
+            with col1:
+                st.metric(label=row['终端类型'], value=f"{int(row['数量'])} 个")
+        elif i == 1:
+            with col2:
+                st.metric(label=row['终端类型'], value=f"{int(row['数量'])} 个")
+        elif i == 2:
+            with col3:
+                st.metric(label=row['终端类型'], value=f"{int(row['数量'])} 个")
 
 
 def main():

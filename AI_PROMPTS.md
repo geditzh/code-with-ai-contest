@@ -220,9 +220,26 @@
 
 ---
 
+### 第十一轮：柱状图原生实现与美化
+
+**用户：**
+> 用streamlit的原生实现，删除matplotlib库实现，美化柱状图，X轴，Y轴，柱状图下标的名称显示。在requirement里，增加pytest库
+
+**Claude：**
+> 我来：
+> 1. 删除 matplotlib 依赖，使用 Streamlit 原生的 `st.bar_chart()`
+> 2. 美化柱状图：添加颜色配置
+> 3. 在图表下方添加 metric 卡片显示各频段/终端类型的具体数量
+> 4. 在 requirements.txt 中添加 pytest
+>
+> [修改 app.py 的图表函数，移除 matplotlib，添加美化样式]
+> [更新 requirements.txt 添加 pytest]
+
+---
+
 ## 📊 开发统计
 
-- **总交互轮次：** 10 轮
+- **总交互轮次：** 11 轮
 - **生成代码行数：** ~340 行
 - **单元测试数量：** 7 个
 - **功能模块：**
