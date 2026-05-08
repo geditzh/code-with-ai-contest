@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import pydeck as pdk
 import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
 
 # 设置页面配置
 st.set_page_config(page_title="5G 信号可视化看板", layout="wide")
@@ -159,7 +161,7 @@ def create_band_chart(df):
     """
     创建频段分布柱状图
 
-    统计各频段的基站数量，使用Streamlit原生图表展示
+    统计各频段的基站数量，使用matplotlib图表展示
 
     Args:
         df (pd.DataFrame): 信号数据DataFrame
@@ -167,13 +169,35 @@ def create_band_chart(df):
     band_counts = df['Band'].value_counts().reset_index()
     band_counts.columns = ['频段', '数量']
 
-    st.subheader("📊 各频段基站数量统计")
-    st.bar_chart(band_counts.set_index('频段'))
+    fig, ax = plt.subplots(figsize=(8, 5))
+    bars = ax.bar(band_counts['频段'], band_counts['数量'], color=['#FF6B6B', '#4ECDC4', '#45B7D1'])
+
+    ax.set_xlabel('频段', fontsize=14, fontweight='bold')
+    ax.set_ylabel('数量', fontsize=14, fontweight='bold')
+    ax.set_title('各频段基站数量统计', fontsize=16, fontweight='bold')
+
+    ax.tick_params(axis='x', labelsize=14, rotation=0)
+    for label in ax.get_xticklabels():
+        label.set_fontweight('bold')
+
+    ax.tick_params(axis='y', labelsize=12)
+
+    for bar in bars:
+        height = bar.get_height()
+        ax.annotate(f'{int(height)}',
+                    xy=(bar.get_x() + bar.get_width() / 2, height),
+                    xytext=(0, 3),
+                    textcoords="offset points",
+                    ha='center', va='bottom', fontsize=12, fontweight='bold')
+
+    plt.tight_layout()
+    st.pyplot(fig)
+    plt.close(fig)
 
 
 def create_terminal_chart(df):
     """
-    创建终端类型分布饼图
+    创建终端类型分布柱状图
 
     统计不同类型终端的占比
 
@@ -183,8 +207,30 @@ def create_terminal_chart(df):
     terminal_counts = df['TerminalType'].value_counts().reset_index()
     terminal_counts.columns = ['终端类型', '数量']
 
-    st.subheader("📱 终端类型分布")
-    st.bar_chart(terminal_counts.set_index('终端类型'))
+    fig, ax = plt.subplots(figsize=(8, 5))
+    bars = ax.bar(terminal_counts['终端类型'], terminal_counts['数量'], color=['#FF6B6B', '#4ECDC4', '#45B7D1'])
+
+    ax.set_xlabel('终端类型', fontsize=14, fontweight='bold')
+    ax.set_ylabel('数量', fontsize=14, fontweight='bold')
+    ax.set_title('终端类型分布', fontsize=16, fontweight='bold')
+
+    ax.tick_params(axis='x', labelsize=14, rotation=0)
+    for label in ax.get_xticklabels():
+        label.set_fontweight('bold')
+
+    ax.tick_params(axis='y', labelsize=12)
+
+    for bar in bars:
+        height = bar.get_height()
+        ax.annotate(f'{int(height)}',
+                    xy=(bar.get_x() + bar.get_width() / 2, height),
+                    xytext=(0, 3),
+                    textcoords="offset points",
+                    ha='center', va='bottom', fontsize=12, fontweight='bold')
+
+    plt.tight_layout()
+    st.pyplot(fig)
+    plt.close(fig)
 
 
 def main():
