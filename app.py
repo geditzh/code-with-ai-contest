@@ -173,29 +173,7 @@ def create_band_chart(df):
     band_counts = df['Band'].value_counts().reset_index()
     band_counts.columns = ['频段', '数量']
 
-    fig, ax = plt.subplots(figsize=(8, 5))
-    bars = ax.bar(band_counts['频段'], band_counts['数量'], color=['#FF6B6B', '#4ECDC4', '#45B7D1'])
-
-    ax.set_xlabel('频段', fontsize=12, fontweight='bold')
-    ax.set_ylabel('数量', fontsize=12, fontweight='bold')
-
-    ax.tick_params(axis='x', labelsize=12, rotation=0)
-    for label in ax.get_xticklabels():
-        label.set_fontweight('bold')
-
-    ax.tick_params(axis='y', labelsize=10)
-
-    for bar in bars:
-        height = bar.get_height()
-        ax.annotate(f'{int(height)}',
-                    xy=(bar.get_x() + bar.get_width() / 2, height),
-                    xytext=(0, 3),
-                    textcoords="offset points",
-                    ha='center', va='bottom', fontsize=10, fontweight='bold')
-
-    plt.tight_layout()
-    st.pyplot(fig)
-    plt.close(fig)
+    st.bar_chart(band_counts.set_index('频段'))
 
 
 def create_terminal_chart(df):
@@ -212,29 +190,7 @@ def create_terminal_chart(df):
     terminal_counts = df['TerminalType'].value_counts().reset_index()
     terminal_counts.columns = ['终端类型', '数量']
 
-    fig, ax = plt.subplots(figsize=(8, 5))
-    bars = ax.bar(terminal_counts['终端类型'], terminal_counts['数量'], color=['#FF6B6B', '#4ECDC4', '#45B7D1'])
-
-    ax.set_xlabel('终端类型', fontsize=12, fontweight='bold')
-    ax.set_ylabel('数量', fontsize=12, fontweight='bold')
-
-    ax.tick_params(axis='x', labelsize=12, rotation=0)
-    for label in ax.get_xticklabels():
-        label.set_fontweight('bold')
-
-    ax.tick_params(axis='y', labelsize=10)
-
-    for bar in bars:
-        height = bar.get_height()
-        ax.annotate(f'{int(height)}',
-                    xy=(bar.get_x() + bar.get_width() / 2, height),
-                    xytext=(0, 3),
-                    textcoords="offset points",
-                    ha='center', va='bottom', fontsize=10, fontweight='bold')
-
-    plt.tight_layout()
-    st.pyplot(fig)
-    plt.close(fig)
+    st.bar_chart(terminal_counts.set_index('终端类型'))
 
 
 def main():
