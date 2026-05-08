@@ -8,7 +8,6 @@ import matplotlib.font_manager as fm
 plt.rcParams['font.sans-serif'] = ['DejaVu Sans', 'Arial Unicode MS', 'Noto Sans CJK SC']
 plt.rcParams['axes.unicode_minus'] = False
 
-# 设置页面配置
 st.set_page_config(page_title="5G 信号可视化看板", layout="wide")
 
 st.title("📡 5G 信号可视化看板")
@@ -96,7 +95,7 @@ def create_3d_map_layer(df):
         pdk.Layer: PyDeck 3D柱状图层
     """
     df['color'] = df['RSRP_dBm'].apply(get_signal_color)
-    df['elevation'] = df['Download_Mbps'] * 10  # 高度与下载速率成正比
+    df['elevation'] = df['Download_Mbps'] * 10
 
     layer = pdk.Layer(
         'ColumnLayer',
@@ -169,6 +168,8 @@ def create_band_chart(df):
     Args:
         df (pd.DataFrame): 信号数据DataFrame
     """
+    st.subheader("📊 各频段基站数量统计")
+
     band_counts = df['Band'].value_counts().reset_index()
     band_counts.columns = ['频段', '数量']
 
@@ -177,7 +178,6 @@ def create_band_chart(df):
 
     ax.set_xlabel('频段', fontsize=12, fontweight='bold')
     ax.set_ylabel('数量', fontsize=12, fontweight='bold')
-    ax.set_title('各频段基站数量统计', fontsize=14, fontweight='bold')
 
     ax.tick_params(axis='x', labelsize=12, rotation=0)
     for label in ax.get_xticklabels():
@@ -207,6 +207,8 @@ def create_terminal_chart(df):
     Args:
         df (pd.DataFrame): 信号数据DataFrame
     """
+    st.subheader("📱 终端类型分布")
+
     terminal_counts = df['TerminalType'].value_counts().reset_index()
     terminal_counts.columns = ['终端类型', '数量']
 
@@ -215,7 +217,6 @@ def create_terminal_chart(df):
 
     ax.set_xlabel('终端类型', fontsize=12, fontweight='bold')
     ax.set_ylabel('数量', fontsize=12, fontweight='bold')
-    ax.set_title('终端类型分布', fontsize=14, fontweight='bold')
 
     ax.tick_params(axis='x', labelsize=12, rotation=0)
     for label in ax.get_xticklabels():
