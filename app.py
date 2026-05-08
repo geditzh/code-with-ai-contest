@@ -5,6 +5,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 
+plt.rcParams['font.sans-serif'] = ['DejaVu Sans', 'Arial Unicode MS', 'Noto Sans CJK SC']
+plt.rcParams['axes.unicode_minus'] = False
+
 # 设置页面配置
 st.set_page_config(page_title="5G 信号可视化看板", layout="wide")
 
@@ -172,15 +175,15 @@ def create_band_chart(df):
     fig, ax = plt.subplots(figsize=(8, 5))
     bars = ax.bar(band_counts['频段'], band_counts['数量'], color=['#FF6B6B', '#4ECDC4', '#45B7D1'])
 
-    ax.set_xlabel('频段', fontsize=14, fontweight='bold')
-    ax.set_ylabel('数量', fontsize=14, fontweight='bold')
-    ax.set_title('各频段基站数量统计', fontsize=16, fontweight='bold')
+    ax.set_xlabel('频段', fontsize=12, fontweight='bold')
+    ax.set_ylabel('数量', fontsize=12, fontweight='bold')
+    ax.set_title('各频段基站数量统计', fontsize=14, fontweight='bold')
 
-    ax.tick_params(axis='x', labelsize=14, rotation=0)
+    ax.tick_params(axis='x', labelsize=12, rotation=0)
     for label in ax.get_xticklabels():
         label.set_fontweight('bold')
 
-    ax.tick_params(axis='y', labelsize=12)
+    ax.tick_params(axis='y', labelsize=10)
 
     for bar in bars:
         height = bar.get_height()
@@ -188,7 +191,7 @@ def create_band_chart(df):
                     xy=(bar.get_x() + bar.get_width() / 2, height),
                     xytext=(0, 3),
                     textcoords="offset points",
-                    ha='center', va='bottom', fontsize=12, fontweight='bold')
+                    ha='center', va='bottom', fontsize=10, fontweight='bold')
 
     plt.tight_layout()
     st.pyplot(fig)
@@ -210,15 +213,15 @@ def create_terminal_chart(df):
     fig, ax = plt.subplots(figsize=(8, 5))
     bars = ax.bar(terminal_counts['终端类型'], terminal_counts['数量'], color=['#FF6B6B', '#4ECDC4', '#45B7D1'])
 
-    ax.set_xlabel('终端类型', fontsize=14, fontweight='bold')
-    ax.set_ylabel('数量', fontsize=14, fontweight='bold')
-    ax.set_title('终端类型分布', fontsize=16, fontweight='bold')
+    ax.set_xlabel('终端类型', fontsize=12, fontweight='bold')
+    ax.set_ylabel('数量', fontsize=12, fontweight='bold')
+    ax.set_title('终端类型分布', fontsize=14, fontweight='bold')
 
-    ax.tick_params(axis='x', labelsize=14, rotation=0)
+    ax.tick_params(axis='x', labelsize=12, rotation=0)
     for label in ax.get_xticklabels():
         label.set_fontweight('bold')
 
-    ax.tick_params(axis='y', labelsize=12)
+    ax.tick_params(axis='y', labelsize=10)
 
     for bar in bars:
         height = bar.get_height()
@@ -226,7 +229,7 @@ def create_terminal_chart(df):
                     xy=(bar.get_x() + bar.get_width() / 2, height),
                     xytext=(0, 3),
                     textcoords="offset points",
-                    ha='center', va='bottom', fontsize=12, fontweight='bold')
+                    ha='center', va='bottom', fontsize=10, fontweight='bold')
 
     plt.tight_layout()
     st.pyplot(fig)
